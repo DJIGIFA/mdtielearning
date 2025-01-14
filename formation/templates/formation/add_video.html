@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajout de video</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body class="container">
+    <div class="text-center h2 mt-2">Ajout de vidéo</div>
+    <form action="" method="post" class="row container" enctype="multipart/form-data"> {% csrf_token %}
+
+
+        <div class="form-group col-md-12">
+            <label for="nom">Nom de la Vidéo</label>
+            <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom" required>
+        </div>
+
+
+
+        <div class="form-group col-md-12">
+            <label for="duree">Durée de la Vidéo</label>
+            <input type="number" class="form-control" name="duree" id="duree" placeholder="Durée" required>
+        </div>
+
+
+
+
+        <div class="form-group col-md-12">
+            <label for="ordre">Ordre de la Vidéo</label>
+            <input type="number" class="form-control" name="ordre" id="duree" placeholder="Ordre de la vidéo dans le chapitre" required>
+        </div>
+
+        
+        <input type="hidden" name="chapitre_id" value="chapitre_id">
+
+
+        <div class="form-group col-md-12">
+            <label for="video">Vidéo</label>
+            <input type="file" accept="video/*" class="form-control" name="video" id="video" placeholder="Vidéo" required>
+        </div>
+
+        <div class="container text-center mt-2">
+            <input type="submit" value="Ajouter" class="btn btn-primary">
+        </div>
+
+
+
+
+
+    </form>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</html>
