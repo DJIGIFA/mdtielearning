@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'ancien_sujet',
     'envoie_email',
     'bibliotheque_numerique',
+    'instructeur',
 ]
 
 MIDDLEWARE = [

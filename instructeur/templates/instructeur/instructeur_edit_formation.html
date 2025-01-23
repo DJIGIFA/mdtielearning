@@ -1,0 +1,145 @@
+{% extends 'instructeur_base.html' %}
+
+{% load static %}
+
+{% block instructeur_body %}
+
+
+    <div class="col-lg-9 col-md-8 col-12">
+        <!-- Card -->
+        <div class="card mb-4">
+            <!-- Card header -->
+            <div class="card-header">
+                <h3 class="mb-0">Modification de la formation</h3>
+            </div>
+            <!-- Card body -->
+            <div class="card-body">
+                <!-- Form -->
+
+
+                <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+
+                    <div class="row">
+
+                        <div class="mb-3 mb-2 col-md-6">
+                            <label class="form-label" for="title">
+                                Nom
+                            </label>
+                            <input type="text" class="form-control" value="{{ formation.nom }}" name="nom"
+                                   placeholder="Nom de la formations"
+                                   id="nom"
+                                   required/>
+                            <div class="invalid-feedback">Entrez le nom de la formation</div>
+                        </div>
+
+
+                        <div class="mb-3 mb-2 col-md-6">
+                            <label class="form-label">Image de miniature</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon3">Image</span>
+                                <input name="miniature" type="file" accept="image/*" class="form-control" id="basic-url"
+                                       aria-describedby="basic-addon3" />
+
+                                <div class="invalid-feedback">Choisir la miniature</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="mb-3 mb-2 col-md-6">
+                            <label class="form-label" for="title">
+                                Prix
+                            </label>
+                            <input type="text" class="form-control" value="{{ formation.prix }}" name="prix"
+                                   placeholder="Prix de la formations"
+                                   id="nom"
+                                   required/>
+
+                            <div class="invalid-feedback">Entrez le Prix de la formation</div>
+                        </div>
+
+                        <div class="mb-3 mb-2 col-md-6">
+                            <label class="form-label" for="title">
+                                Catégorie
+
+                            </label>
+                            <select class="form-control" name="sous_categorie_id" id="sous_categorie_id" required>
+                                <option value="{{ formation.sous_categorie.id }}">{{ formation.sous_categorie.nom }}</option>
+                                {% for sous_categorie in sous_categories %}
+                                    <option value="{{ sous_categorie.id }}">{{ sous_categorie.nom }}</option>
+                                {% endfor %}
+                            </select>
+
+
+                            <div class="invalid-feedback">Choisir de la catégorie de la formation</div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3 mb-2 col-md-6">
+                        <label class="form-label" for="nombre_heur">
+                            La durrée de la formation en minutes
+
+                        </label>
+                        <input type="text" class="form-control" name="nombre_heur" value="{{ formation.nombre_heur }}"
+                               placeholder="La durré de la formation" id="nombre_heur"
+                               required/>
+                        <div class="invalid-feedback">Entrez la durrée de la formation</div>
+                    </div>
+
+
+                    <div class="mb-3 mb-2">
+
+                        <label class="form-label" for="title">description (brève)</label>
+                        <textarea class="form-control"
+                                  rows="5" name="description" id="description" required>{{ formation.description }}</textarea>
+                        <div class="invalid-feedback">Entrez la description de la formation</div>
+
+                    </div>
+
+
+                    <div class="mb-3 mb-2">
+                        <label class="form-label" for="prerequis">Prérequis</label>
+                        <textarea class="form-control" rows="2" name="prerequis" id="prerequis" required>{{ formation.prerequis }}</textarea>
+                        <div class="invalid-feedback">Entrez les prérequis de la formation</div>
+
+                    </div>
+
+
+                    <div class="mb-3 mb-2">
+                        <label class="form-label" for="profile_destine">Destiné aux : </label>
+                        <textarea class="form-control"  rows="2" name="profile_destine" id="profile_destine"
+                                  required>{{ formation.profile_destine }}</textarea>
+                        <div class="invalid-feedback">Entrez les profiles aux quels de la formation est destinée</div>
+
+                    </div>
+
+
+                    <div class="mb-3 mb-2">
+                        <label class="form-label" for="objectif_du_cours">Objectifs de la formation : </label>
+                        <textarea class="form-control" rows="2" name="objectif_du_cours"
+                                  id="objectif_du_cours" required>{{ formation.objectif_du_cours }}</textarea>
+                        <div class="invalid-feedback">Entrez les objectifs de la formation</div>
+
+                    </div>
+
+
+                    <div>
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+
+            </div>
+            <!-- Table -->
+
+        </div>
+    </div>
+
+
+{% endblock %}

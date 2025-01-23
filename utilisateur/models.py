@@ -5,6 +5,7 @@ from django.db import models
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.text import slugify
 
 
 # Create your models here.
@@ -28,7 +29,7 @@ class Utilisateur(AbstractUser):
     type_compte = models.CharField(max_length=300, choices=TYPE_COMPTE)
     numero = models.CharField(max_length=200, blank=True, null=True)
     sexe = models.CharField(max_length=30, verbose_name="Genre", blank=True, null=True)
-    quartier = models.CharField(max_length=300, verbose_name="Quartier / ville", blank=True, null=True)
+    quartier = models.CharField(max_length=300, verbose_name="Quartier / ville", blank=True, null=True,default="N/A")
     travail = models.CharField(max_length=300, blank=True, null=True)
     date_naissance = models.DateField(auto_now_add=True, blank=True, null=True)
     mail_verifier = models.BooleanField(default=False)
@@ -39,6 +40,27 @@ class Utilisateur(AbstractUser):
 
     def __str__(self):
         return f"{self.first_name} ({self.username})"
+
+    @property
+    def nombre_cour(self):
+        return len(self.cour_set.all())
+
+
+
+    @property
+    def somme_payer(self):
+        return sum(i.montant for i in self.cour_set.all())
+
+    @property
+    def nombre_formation(self):
+        return len(self.formation_set.all())
+
+
+    @property
+    def nombre_apprenant(self):
+        return sum(f.cour_set.all() for f in self.formation_set.all())
+
+
 
 
 class Universite(models.Model):

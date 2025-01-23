@@ -668,13 +668,39 @@ def admin_index(request):
 
     nombre_apprenant = len(Utilisateur.objects.all().filter(type_compte="Apprenant"))
     nombre_instructeur = len(Utilisateur.objects.all().filter(type_compte="Instructeur"))
+    nombre_admin = len(Utilisateur.objects.all().filter(type_compte="Admin"))
 
 
     context = {
         "nombre_formation": nombre_formation,
         "nombre_apprenant" : nombre_apprenant,
-        "nombre_instructeur" :nombre_instructeur
+        "nombre_instructeur" :nombre_instructeur,
+        "nombre_admin" :nombre_admin,
     }
 
     return render(request, "utilisateur/admin/admin_index.html", context=context)
+
+
+def admin_instructeur_liste(request):
+
+
+    all_utilisateurs = Utilisateur.objects.all().filter(type_compte="Instructeur")
+
+    context = {
+        "all_utilisateurs": all_utilisateurs,
+        "nombre_instructeur": len(all_utilisateurs)
+    }
+    return render(request, "utilisateur/admin/admin_instructeur_liste.html",context=context)
+
+
+def admin_apprenant_liste(request):
+
+    all_utilisateurs = Utilisateur.objects.all().filter(type_compte="Apprenant")
+
+    context = {
+        "all_utilisateurs": all_utilisateurs,
+        "nombre_apprenant": len(all_utilisateurs)
+    }
+
+    return render(request, "utilisateur/admin/admin_apprenant_liste.html",context=context)
 

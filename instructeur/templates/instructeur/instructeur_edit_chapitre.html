@@ -1,0 +1,65 @@
+{% extends 'instructeur_base.html' %}
+
+{% load static %}
+
+{% block instructeur_body %}
+
+
+    <div class="col-lg-9 col-md-8 col-12">
+        <!-- Card -->
+        <div class="card mb-4">
+            <!-- Card header -->
+            <div class="card-header">
+                <h3 class="mb-0">Modification du chapitre</h3>
+            </div>
+            <!-- Card body -->
+            <div class="card-body">
+                <!-- Form -->
+
+                <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+
+
+
+                        <div class="mb-3 mb-2 col-md-6">
+                            <label class="form-label" for="title">
+                                Nom
+                            </label>
+                            <input type="text" class="form-control" value="{{ chapitre.nom }}" name="nom"
+                                   placeholder="Nom du chapitre"
+                                   id="nom"
+                                   required/>
+                            <div class="invalid-feedback">Entrez le nom du chapitre</div>
+                        </div>
+
+
+
+
+
+                        <div class="mb-3 mb-2 col-md-6">
+                            <label class="form-label" for="title">
+                                Ordre
+                            </label>
+                            <input type="text" class="form-control" value="{{ chapitre.ordre }}" name="ordre"
+                                   placeholder="Ordre du chapitre"
+                                   id="ordre"
+                                   required/>
+                            <div class="invalid-feedback">Entrez l'ordre du chapitre</div>
+                        </div>
+
+
+
+
+                    <div>
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+
+            </div>
+            <!-- Table -->
+
+        </div>
+    </div>
+
+
+{% endblock %}

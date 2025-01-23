@@ -34,6 +34,10 @@ class Categorie(models.Model):
             num += 1
         return unique_slug
 
+    @property
+    def nombre_formation(self):
+        return sum(len(d.all_formation ) for d in self.souscategorie_set.all() )
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = self._get_unique_slug()
@@ -49,6 +53,10 @@ class SousCategorie(models.Model):
     @property
     def all_formation(self):
         return self.formation_set.all()
+
+    @property
+    def nombre_formation(self):
+        return len(self.all_formation)
 
     def _get_unique_slug(self):
         slug = slugify(self.nom)
@@ -110,6 +118,20 @@ class Formation(models.Model):
     def nombre_heur_str(self):
         return minute_to_heure(self.nombre_heur)
 
+    @property
+    def status(self):
+
+        status = ""
+        status += "En ligne" if self.publier else " Hors ligne"
+        status += ", moderer" if self.moderer else ""
+        status += ", Non terminer" if not self.ajout_terminer else ", terminer"
+
+        return status
+
+    @property
+    def qcm(self):
+        return self.qcm_set.all()
+
     def _get_unique_slug(self):
         slug = slugify(self.nom)
         unique_slug = slug
@@ -125,10 +147,13 @@ class Formation(models.Model):
         super().save()
 
 
+
 class Chapitre(models.Model):
     nom = models.CharField(max_length=200)
     formation = models.ForeignKey(Formation, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
+    ordre = models.IntegerField(default=0)
+
 
     @property
     def nombre_video(self):
@@ -248,6 +273,12 @@ class Qcm(models.Model):
     @property
     def point_total(self):
         return sum([q.point for q in self.question_set.all()])
+
+    @property
+    def questions(self):
+        return self.question_set.all()
+
+
 
 
 class Question(models.Model):

@@ -1,0 +1,100 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block body %}
+
+    <!-- Container fluid -->
+    <section class="container-fluid p-4">
+        <div class="row">
+            <!-- Page Header -->
+            <div class="col-lg-12 col-md-12 col-12">
+                <div
+                        class="border-bottom pb-3 mb-3 d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between">
+                    <div class="d-flex flex-column gap-1">
+                        <h1 class="mb-0 h2 fw-bold">Catégorie de formation</h1>
+                        <!-- Breadcrumb -->
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'admin_index' %}">Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'admin_sous_categorie' %}">Liste sous catégories</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Catégorie de formation</li>
+                            </ol>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card header -->
+                    <div class="card-header border-bottom-0">
+                        <!-- Form -->
+
+                        <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+                            {% csrf_token %}
+                            <div class="mb-3 mb-2">
+                                <label class="form-label" for="title">
+                                    Nom
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" value="{{ sous_categorie.nom }}" name="nom"
+                                       placeholder="Nom de la catégorie" id="nom" required/>
+                                <small>---</small>
+                                <div class="invalid-feedback">Entrez le nom de la catégorie</div>
+                            </div>
+
+
+                            <div class="mb-3 mb-2">
+                                <label class="form-label" for="categorie_id">
+                                    Catégorie
+                                    <span class="text-danger">*</span>
+                                </label>
+
+
+                                <select class="form-control" name="categorie_id" id="categorie_id">
+                                    <option value="{{ sous_categorie.categorie.id }}">{{ sous_categorie.categorie.nom }}</option>
+
+                                    {% for categorie in all_categorie %}
+
+                                        <option value="{{ categorie.id }}">{{ categorie.nom }}</option>
+
+                                    {% endfor %}
+
+                                </select>
+                                <small>---</small>
+                                <div class="invalid-feedback">Entrez le nom de la catégorie</div>
+                            </div>
+
+
+                            <div class="mb-3 mb-2">
+                                <label class="form-label">Image de couverture</label>
+
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon3">Image</span>
+                                    <input name="image" type="file" accept="image/*" class="form-control" id="basic-url"
+                                           aria-describedby="basic-addon3"/>
+                                </div>
+
+                                <small>Champs obligatoire</small>
+                            </div>
+
+                            <div>
+                                <button type="submit" class="btn btn-primary">Modifier</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- Table -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

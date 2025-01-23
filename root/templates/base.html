@@ -173,7 +173,7 @@
                             <h4 class="dropdown-header">Landings</h4>
                         </li>
                         <li>
-                            <a href="./index.html" class="dropdown-item">
+                            <a href="{% url 'index' %}" class="dropdown-item">
                                 <span>Home Default</span>
                                 <span class="badge bg-primary ms-2">New</span>
                             </a>
@@ -450,63 +450,15 @@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarAccount" data-bs-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">Accounts</a>
+                       aria-haspopup="true" aria-expanded="false">Comptes</a>
                     <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarAccount">
                         <li>
-                            <h4 class="dropdown-header">Accounts</h4>
+                            <h4 class="dropdown-header">Comptes</h4>
                         </li>
                         <li class="dropdown-submenu dropend">
-                            <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#">Instructor</a>
-                            <ul class="dropdown-menu">
-                                <li class="text-wrap">
-                                    <h5 class="dropdown-header text-dark">Instructor</h5>
-                                    <p class="dropdown-text mb-0">Instructor dashboard for manage courses and
-                                        earning.</p>
-                                </li>
-                                <li>
-                                    <hr class="mx-3"/>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="./pages/dashboard-instructor.html">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="./pages/instructor-profile.html">Profile</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="./pages/instructor-courses.html">My Courses</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="./pages/instructor-order.html">Orders</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="./pages/instructor-reviews.html">Reviews</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="./pages/instructor-students.html">Students</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="./pages/instructor-payouts.html">Payouts</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="./pages/instructor-earning.html">Earning</a>
-                                </li>
-                                <li class="dropdown-submenu dropend">
-                                    <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#">Quiz</a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="./pages/instructor-quiz.html">Quiz</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item"
-                                               href="./pages/instructor-quiz-details.html">Single</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item"
-                                               href="./pages/instructor-quiz-result.html">Result</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="{% url 'instructeur_index' %}">Instructeurs</a>
+                           
+                            
                         </li>
                         <li class="dropdown-submenu dropend">
                             <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#">Students</a>
@@ -671,39 +623,6 @@
     </div>
 </nav>
 
-<!-- Modal -->
-<div class="modal fade" id="langaugeModal" tabindex="-1" aria-labelledby="langaugeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="modal-title" id="langaugeModalLabel">Choose a language</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
-                    <a class="text-inherit fw-semibold active" href="#!">English</a>
-                    <a class="text-inherit fw-semibold" href="#!">Deutsch</a>
-                    <a class="text-inherit fw-semibold" href="#!">Español</a>
-                    <a class="text-inherit fw-semibold" href="#!">Français</a>
-                    <a class="text-inherit fw-semibold" href="#!">Indonesia</a>
-                    <a class="text-inherit fw-semibold" href="#!">Italiano</a>
-                    <a class="text-inherit fw-semibold" href="#!">日本語</a>
-                    <a class="text-inherit fw-semibold" href="#!">한국어</a>
-                    <a class="text-inherit fw-semibold" href="#!">Nederlands</a>
-                    <a class="text-inherit fw-semibold" href="#!">Polski</a>
-                    <a class="text-inherit fw-semibold" href="#!">Português</a>
-                    <a class="text-inherit fw-semibold" href="#!">Română</a>
-                    <a class="text-inherit fw-semibold" href="#!">Русский</a>
-                    <a class="text-inherit fw-semibold" href="#!">ภาษาไทย</a>
-                    <a class="text-inherit fw-semibold" href="#!">Türkçe</a>
-                    <a class="text-inherit fw-semibold" href="#!">Tiếng Việt</a>
-                    <a class="text-inherit fw-semibold" href="#!">中文(简体)</a>
-                    <a class="text-inherit fw-semibold" href="#!">中文(繁體)</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <main>
 

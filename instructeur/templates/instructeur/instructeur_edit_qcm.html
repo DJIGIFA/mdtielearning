@@ -1,0 +1,73 @@
+{% extends 'instructeur_base.html' %}
+
+{% load static %}
+
+{% block instructeur_body %}
+
+
+    <div class="col-lg-9 col-md-8 col-12">
+        <!-- Card -->
+        <div class="card mb-4">
+            <!-- Card header -->
+            <div class="card-header">
+                <h3 class="mb-0">Modification du QCM</h3>
+            </div>
+            <!-- Card body -->
+            <div class="card-body">
+                <!-- Form -->
+
+                <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+
+                    <div class="row">
+
+                        <div class="mb-3 mb-2 col-md-6">
+                            <label class="form-label" for="title">
+                                Nom
+                            </label>
+                            <input type="text" class="form-control" value="{{ qcm.nom }}" name="nom"
+                                   placeholder="Nom de la formations"
+                                   id="nom"
+                                   required/>
+                            <div class="invalid-feedback">Entrez le nom du qcm</div>
+                        </div>
+
+
+                        <div class="mb-3 mb-2 col-md-6">
+                            <label class="form-label" for="duree">
+                                Durre
+                            </label>
+                            <input type="text" class="form-control" value="{{ qcm.duree }}" name="duree"
+                                   placeholder="Durée du qcm"
+                                   id="duree"
+                                   required/>
+                            <div class="invalid-feedback">Entrez la durée du qcm</div>
+                        </div>
+
+                        <div class="mb-3 mb-2 col-md-6">
+                            <label class="form-label" for="description">
+                                Durre
+                            </label>
+
+                            <textarea class="form-control"  name="description" id="description"  rows="5">{{ qcm.description }}</textarea>
+                            <div class="invalid-feedback">Entrez la Description du qcm</div>
+                        </div>
+
+
+
+                    </div>
+
+
+                    <div>
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+
+            </div>
+            <!-- Table -->
+
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,6 +1,5 @@
 {% extends 'admin_base.html' %}
 
-
 {% load static %}
 
 {% block body %}
@@ -12,23 +11,21 @@
                 <!-- Page Header -->
                 <div class="border-bottom pb-3 mb-3 d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between">
                     <div class="d-flex flex-column gap-1">
-                        <h1 class="mb-0 h2 fw-bold">Courses</h1>
+                        <h1 class="mb-0 h2 fw-bold">Formation</h1>
                         <!-- Breadcrumb -->
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="../dashboard/admin-dashboard.html">Dashboard</a>
+                                    <a href="{% url 'admin_index' %}">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="#">Courses</a>
+                                    <a href="#">Formations</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">All</li>
+                                <li class="breadcrumb-item active" aria-current="page">Toutes</li>
                             </ol>
                         </nav>
                     </div>
-                    <div>
-                        <a href="../add-course.html" class="btn btn-primary">Add New Courses</a>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -73,8 +70,8 @@
                                     <table class="table mb-0 text-nowrap table-centered table-hover">
                                         <thead class="table-light">
                                         <tr>
-                                            <th>Courses</th>
-                                            <th>Instructor</th>
+                                            <th>Formation</th>
+                                            <th>Instructeur</th>
                                             <th>STATUS</th>
                                             <th>ACTION</th>
                                             <th></th>
@@ -83,81 +80,28 @@
                                         <tbody>
 
 
-                                        <tr>
-                                            <td>
-                                                <a href="#" class="text-inherit">
-                                                    <div class="d-flex align-items-center gap-3">
-                                                        <div>
-                                                            <img src="{% static 'assets/images/course/course-gatsby.jpg' %}"
-                                                                 alt="" class="img-4by3-lg rounded"/>
-                                                        </div>
-                                                        <div class="d-flex flex-column gap-1">
-                                                            <h4 class="mb-0 text-primary-hover">Revolutionize how you
-                                                                build the web...</h4>
-                                                            <span>Added on 7 July, 2023</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex align-items-center flex-row gap-2">
-                                                    <img src="{% static 'assets/images/avatar/avatar-7.jpg' %}" alt=""
-                                                         class="rounded-circle avatar-xs"/>
-                                                    <h5 class="mb-0">Reva Yokk</h5>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="badge-dot bg-warning me-1 d-inline-block align-middle"></span>
-                                                Pending
-                                            </td>
-                                            <td>
-                                                <a href="#" class="btn btn-outline-secondary btn-sm">Reject</a>
-                                                <a href="#" class="btn btn-success btn-sm">Approved</a>
-                                            </td>
-                                            <td>
-                                <span class="dropdown dropstart">
-                                  <a
-                                          class="btn-icon btn btn-ghost btn-sm rounded-circle"
-                                          href="#"
-                                          role="button"
-                                          id="courseDropdown1"
-                                          data-bs-toggle="dropdown"
-                                          data-bs-offset="-20,20"
-                                          aria-expanded="false">
-                                    <i class="fe fe-more-vertical"></i>
-                                  </a>
-                                  <span class="dropdown-menu" aria-labelledby="courseDropdown1">
-                                    <span class="dropdown-header">Settings</span>
-                                    <a class="dropdown-item" href="#">
-                                      <i class="fe fe-x-circle dropdown-item-icon"></i>
-                                      Reject with Feedback
-                                    </a>
-                                  </span>
-                                </span>
-                                            </td>
-                                        </tr>
+                                        {% for formation in all_formation %}
 
                                         <tr>
                                             <td>
                                                 <a href="#" class="text-inherit">
                                                     <div class="d-flex align-items-center flex-row gap-3">
                                                         <div>
-                                                            <img src="{% static 'assets/images/course/course-react.jpg' %}"
+                                                            <img src="{{ formation.miniature.url }}"
                                                                  alt="" class="img-4by3-lg rounded"/>
                                                         </div>
                                                         <div class="d-flex flex-column gap-1">
-                                                            <h4 class="mb-0 text-primary-hover">Get Start with
-                                                                React...</h4>
-                                                            <span>Added on 4 July, 2023</span>
+                                                            <h4 class="mb-0 text-primary-hover">{{ formation.nom|truncatechars:15 }}..</h4>
+                                                            <span>{{ formation.dernier_mise_a_jour}}</span>
                                                         </div>
                                                     </div>
                                                 </a>
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center flex-row gap-2">
-                                                    <img src="{% static 'assets/images/avatar/avatar-2.jpg' %}" alt=""
+                                                    <img src="{% if formation.instructeur.avatar %} {{ formation.instructeur.avatar.url }} {% else %} {% static 'assets/images/avatar/avatar-11.jpg' %} {% endif %}" alt=""
                                                          class="rounded-circle avatar-xs"/>
-                                                    <h5 class="mb-0">April Noms</h5>
+                                                    <h5 class="mb-0">{{ formation.instructeur.first_name}} - {{ formation.instructeur.last_name}}</h5>
                                                 </div>
                                             </td>
                                             <td>
@@ -165,7 +109,7 @@
                                                 Live
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-secondary btn-sm">Change Status</a>
+                                                <a href="#" class="btn btn-secondary btn-sm">Modifier</a>
                                             </td>
                                             <td>
                                 <span class="dropdown dropstart">
@@ -190,60 +134,7 @@
                                             </td>
                                         </tr>
 
-
-                                        <tr>
-                                            <td>
-                                                <a href="#" class="text-inherit">
-                                                    <div class="d-flex align-items-center flex-row gap-3">
-                                                        <div>
-                                                            <img src="{% static 'assets/images/course/course-angular.jpg' %}"
-                                                                 alt="" class="img-4by3-lg rounded"/>
-                                                        </div>
-                                                        <div class="d-flex flex-column gap-1">
-                                                            <h4 class="mb-0 text-primary-hover">Get Start with
-                                                                Angular...</h4>
-                                                            <span>Added on 3 July, 2023</span>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex align-items-center flex-row gap-2">
-                                                    <img src="{% static 'assets/images/avatar/avatar-4.jpg' %}" alt=""
-                                                         class="rounded-circle avatar-xs"/>
-                                                    <h5 class="mb-0">Jacob Jones</h5>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="badge-dot bg-warning me-1 d-inline-block align-middle"></span>
-                                                Pending
-                                            </td>
-                                            <td>
-                                                <a href="#" class="btn btn-outline-secondary btn-sm">Reject</a>
-                                                <a href="#" class="btn btn-success btn-sm">Approved</a>
-                                            </td>
-                                            <td>
-                                <span class="dropdown dropstart">
-                                  <a
-                                          class="btn-icon btn btn-ghost btn-sm rounded-circle"
-                                          href="#"
-                                          role="button"
-                                          id="courseDropdown8"
-                                          data-bs-toggle="dropdown"
-                                          data-bs-offset="-20,20"
-                                          aria-expanded="false">
-                                    <i class="fe fe-more-vertical"></i>
-                                  </a>
-                                  <span class="dropdown-menu" aria-labelledby="courseDropdown8">
-                                    <span class="dropdown-header">Settings</span>
-                                    <a class="dropdown-item" href="#">
-                                      <i class="fe fe-x-circle dropdown-item-icon"></i>
-                                      Reject with Feedback
-                                    </a>
-                                  </span>
-                                </span>
-                                            </td>
-                                        </tr>
+                                        {% endfor %}
 
 
                                         </tbody>
@@ -265,7 +156,6 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-
 
 
                                         <tr>

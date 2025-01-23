@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import api_user_login, api_user_register, api_user_get_profil, api_user_set_profil, api_user_get, \
     add_universiter, del_universiter, get_universiter, get_universiter_un, set_universiter, web_connexion, \
-    web_inscription, web_deconnexion, admin_index
+    web_inscription, web_deconnexion, admin_index, admin_instructeur_liste, admin_apprenant_liste
 
 urlpatterns = [
 
@@ -30,6 +30,7 @@ urlpatterns = [
 
 
     path("web-admin-index", admin_index, name="admin_index"),
-
+    path("web-admin-instructeur-liste", admin_instructeur_liste, name="admin_instructeur_liste"),
+    path("web-admin-apprenant-liste", admin_apprenant_liste, name="admin_apprenant_liste"),
 
 ]

@@ -1,0 +1,194 @@
+{% extends 'instructeur_base.html' %}
+
+{% load static %}
+
+{% block instructeur_body %}
+
+
+    <div class="col-lg-9 col-md-8 col-12">
+        <!-- Card -->
+        <div class="card mb-4">
+            <!-- Card header -->
+            <div class="card-header">
+                <h3 class="mb-0">Détaille du QCM ({{ qcm.nom }})</h3>
+            </div>
+            <!-- Card body -->
+            <div class="card-body">
+                <!-- Form -->
+
+
+            </div>
+            <!-- Table -->
+
+        </div>
+
+        <!-- Card -->
+        <div class="card mb-4">
+            <!-- Card header -->
+            <div class="card-header">
+                <span class="mb-0 h3">Liste des questions</span>
+                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCatgory">Ajouter une question</a>
+
+            </div>
+
+            <!-- Card body -->
+            <div class="card-body">
+                <!-- Form -->
+                <!-- Table -->
+                <div class="table-responsive overflow-y-hidden">
+                    <table class="table mb-0 text-nowrap table-hover table-centered text-nowrap">
+                        <thead class="table-light">
+                        <tr>
+                            <th>question</th>
+                            <th>point</th>
+
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for question in qcm.questions %}
+
+
+                            <tr>
+                                <td>
+                                    {{ question.question }}
+                                </td>
+                                <td>{{ question.point }}</td>
+
+
+
+                                <td>
+                                                    <span class="dropdown dropstart">
+                                                        <a
+                                                                class="btn-icon btn btn-ghost btn-sm rounded-circle"
+                                                                href="#"
+                                                                role="button"
+                                                                id="courseDropdown"
+                                                                data-bs-toggle="dropdown"
+                                                                data-bs-offset="-20,20"
+                                                                aria-expanded="false">
+                                                            <i class="fe fe-more-vertical"></i>
+                                                        </a>
+                                                        <span class="dropdown-menu" aria-labelledby="courseDropdown">
+                                                            <span class="dropdown-header">Setting</span>
+
+
+                                                            <a class="dropdown-item"
+                                                               href="{{ video.video.url }}" target="_blank">
+                                                                <i class="fe fe-eye dropdown-item-icon"></i>
+                                                                regarder
+                                                            </a>
+
+
+                                                            <a class="dropdown-item" onclick="return confirm('Supprimer la video ?')"
+                                                               href="{% url 'instructeur_suppression_de_la_video' video.id %}">
+                                                                <i class="fe fe-delete dropdown-item-icon"></i>
+                                                                Supprimer
+                                                            </a>
+
+
+                                                        </span>
+                                                    </span>
+                                </td>
+                            </tr>
+
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <!-- Table -->
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="newCatgory" tabindex="-1" role="dialog" aria-labelledby="newCatgoryLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title mb-0" id="newCatgoryLabel">Ajout d'une question</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+
+
+
+                        <div class="mb-3 mb-2">
+                            <label class="form-label" for="title">
+                                Nom
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" name="nom" placeholder="Nom de la vidéo"
+                                   id="nom" required/>
+                            <small>---</small>
+                            <div class="invalid-feedback">Entrez la durée de la vidéo</div>
+                        </div>
+
+
+                        <div class="mb-3 mb-2">
+                            <label class="form-label" for="duree">
+                                Durée
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="number" class="form-control" name="duree" placeholder="Duree de la vidéo"
+                                   id="duree" required/>
+                            <small>---</small>
+                            <div class="invalid-feedback">Entrez la durée de la vidéo</div>
+                        </div>
+
+
+
+
+                        <div class="mb-3 mb-2">
+                            <label class="form-label" for="ordre">
+                                Ordre
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="number" class="form-control" name="ordre" placeholder="ordre de la vidéo"
+                                   id="ordre" required/>
+                            <small>---</small>
+                            <div class="invalid-feedback">Entrez l'odre de la vidéo</div>
+                        </div>
+
+
+
+
+
+
+                        <div class="mb-3 mb-2">
+                            <label class="form-label" for="title">
+                                La vidéo
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="file" accept="video/*" class="form-control" name="video" placeholder="la vidéo"
+                                   id="nom" required/>
+                            <small>---</small>
+                            <div class="invalid-feedback">Selectionner la vidéo</div>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

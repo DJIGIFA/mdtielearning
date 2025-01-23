@@ -1,10 +1,14 @@
 import datetime
 import json
 import string
+from functools import reduce
+from operator import or_
 
 import requests
+from django.contrib import messages
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
@@ -341,7 +345,6 @@ def set_formation(request):
 
                 if "profile_destine" in form:
                     profile_destine = form.get("profile_destine")
-
 
                     formation.profile_destine = profile_destine
                     modifier = True
@@ -2330,7 +2333,6 @@ def get_video_un(request, id):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-
 @csrf_exempt
 def del_video(request):
     response_data = {'message': "requette invalide", 'etat': False}
@@ -3964,9 +3966,190 @@ def paiement_formation_callback(request, order_id):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-
 ### WEB FORMATION
 
 def admin_formation_liste(request):
+    all_formation = Formation.objects.all()
 
-    return render(request, "formation/admin/admin_formation_liste.html")
+    context = {
+        'all_formation': all_formation,
+        'all_formation_modere': all_formation.filter(publier=True)
+    }
+    return render(request, "formation/admin/admin_formation_liste.html", context=context)
+
+
+def admin_categorie(request):
+    # ajout
+    if request.method == "POST":
+        form = request.POST
+        nom = form.get("nom")
+        image = request.FILES['image']
+
+        new_categorie = Categorie(nom=nom, image=image)
+        new_categorie.save()
+        messages.success(request, "Catéroei ajouter");
+
+    all_categorie = Categorie.objects.all()
+
+    # Champs de recherche / filtre
+    if request.method == "GET":
+        form = request.GET
+        if "nom_pour_recherche" in form and form.get("nom_pour_recherche"):
+            nom_pour_recherche = form.get("nom_pour_recherche")
+            print(nom_pour_recherche)
+
+            liste_str = nom_pour_recherche.split()
+            all_categorie = all_categorie.filter(reduce(or_, [Q(nom__icontains=s) for s in liste_str]))
+
+    context = {
+        "all_categorie": all_categorie
+    }
+    return render(request, "formation/admin/admin_categorie.html", context=context)
+
+
+def admin_categorie_suppression(request, id):
+    categorie = Categorie.objects.all().filter(id=id).first()
+
+    if categorie:
+        categorie.delete()
+        messages.success(request, "Supprimer")
+    else:
+        messages.warning(request, "Categorie non trouver")
+
+    return redirect(reverse("admin_categorie"))
+
+
+def admin_categorie_modifier(request, id):
+    categorie = Categorie.objects.all().filter(id=id).first()
+
+    if request.method == "POST":
+        form = request.POST
+
+        nom = form.get("nom")
+
+        if nom and nom != categorie.nom:
+            categorie.nom = nom
+            categorie.save()
+
+        if "image" in request.FILES:
+            image = request.FILES["image"]
+            categorie.image = image
+            categorie.save()
+
+        messages.success(request, "Modifier")
+
+        return redirect(reverse("admin_categorie"))
+
+    context = {
+        "categorie": categorie
+    }
+
+    return render(request, "formation/admin/admin_categorie_modifier.html", context=context)
+
+
+### Sous Catégorie
+def admin_sous_categorie(request):
+
+
+    # Ajout d'une sous categorie
+    if request.method == "POST":
+        form = request.POST
+
+        nom = form.get("nom")
+        categorie_id = form.get("categorie_id")
+
+        image = request.FILES['image']
+
+        categorie = Categorie.objects.all().filter(id=categorie_id).first()
+
+
+        if categorie:
+            new_sous_categorie = SousCategorie(
+                nom=nom,
+                categorie=categorie,
+                image=image
+            )
+
+            new_sous_categorie.save()
+        else:
+            messages.warning(request, "Catégorie non trouver")
+
+
+
+
+
+
+
+
+    all_sous_categorie = SousCategorie.objects.all()
+    all_categorie = Categorie.objects.all()
+
+
+
+    # Champs de recherche / filtre
+    if request.method == "GET":
+        form = request.GET
+        if "nom_pour_recherche" in form and form.get("nom_pour_recherche"):
+            nom_pour_recherche = form.get("nom_pour_recherche")
+
+            liste_str = nom_pour_recherche.split()
+            all_sous_categorie = all_sous_categorie.filter(reduce(or_, [Q(nom__icontains=s) for s in liste_str]))
+
+    context = {
+        "all_sous_categorie": all_sous_categorie,
+        "all_categorie": all_categorie
+    }
+
+    return render(request, "formation/admin/admin_sous_categorie.html",
+                  context=context)
+
+
+def admin_sous_categorie_modifier(request, id):
+    sous_categorie = SousCategorie.objects.all().filter(id=id).first()
+
+    if request.method == "POST":
+        form = request.POST
+
+        nom = form.get("nom")
+
+        if nom and nom != sous_categorie.nom:
+            sous_categorie.nom = nom
+            sous_categorie.save()
+
+        if "image" in request.FILES:
+            image = request.FILES["image"]
+            sous_categorie.image = image
+            sous_categorie.save()
+
+        if "categorie_id" in form:
+            categorie_id = form.get("categorie_id")
+
+            categorie = Categorie.objects.all().filter(id=categorie_id).first()
+
+            if categorie:
+                sous_categorie.categorie = categorie
+                sous_categorie.save()
+
+        messages.success(request, "Modifier")
+
+        return redirect(reverse("admin_sous_categorie"))
+
+    all_categorie = Categorie.objects.all()
+    context = {
+        "sous_categorie": sous_categorie,
+        "all_categorie": all_categorie
+    }
+
+    return render(request, "formation/admin/admin_sous_categorie_modifier.html", context=context)
+
+
+def admin_sous_categorie_suppression(request, id):
+    sous_categorie = SousCategorie.objects.all().filter(id=id).first()
+
+    if sous_categorie:
+        sous_categorie.delete()
+        messages.success(request, "Supprimer")
+    else:
+        messages.warning(request, "Categorie non trouver")
+
+    return redirect(reverse("admin_sous_categorie"))

@@ -13,7 +13,9 @@ from .views import add_formation, add_categorie, del_categorie, get_categorie, s
     examen_resultat_del, examen_resultat_get, examen_resultat_all, examen_resultat_get_un, get_temoignages_sans_m, \
     ordre_paiement, pay_formation_get_historique, pay_formation_verifier, paiement_formation_callback, add_suive, \
     set_suive, get_suive, del_suive, add_participer, set_participer, participer_get_all, get_participer, del_participer, \
-    get_formation_un, get_video_un, admin_formation_liste
+    get_formation_un, get_video_un, admin_formation_liste, admin_categorie, admin_sous_categorie, \
+    admin_categorie_suppression, admin_categorie_modifier, admin_sous_categorie_modifier, \
+    admin_sous_categorie_suppression
 
 urlpatterns = [
     path("add", add_formation, name="add_formation"),
@@ -142,6 +144,13 @@ urlpatterns = [
 
     ### WEB FORMATION
 
-    path("admin-ormation-liste", admin_formation_liste, name="admin_formation_liste"),
+    path("admin-formation-liste", admin_formation_liste, name="admin_formation_liste"),
+    path("admin-formation-categorie", admin_categorie, name="admin_categorie"),
+    path("admin-formation-categorie/modifier/<int:id>", admin_categorie_modifier, name="admin_categorie_modifier"),
+    path("admin-formation-categorie/del/<int:id>", admin_categorie_suppression, name="admin_categorie_suppression"),
+    path("admin-formation-sous-categorie", admin_sous_categorie, name="admin_sous_categorie"),
+    path("admin-formation-sous-categorie/modifier/<int:id>", admin_sous_categorie_modifier, name="admin_sous_categorie_modifier"),
+
+    path("admin-formation-sous-categorie/del/<int:id>", admin_sous_categorie_suppression, name="admin_sous_categorie_suppression"),
 
 ]
