@@ -35,7 +35,6 @@ class Categorie(models.Model):
 
 class Auteur(models.Model):
     admin = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
-
     nom = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     date = models.DateField(auto_now_add=True)

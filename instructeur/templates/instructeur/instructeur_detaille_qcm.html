@@ -27,7 +27,8 @@
             <!-- Card header -->
             <div class="card-header">
                 <span class="mb-0 h3">Liste des questions</span>
-                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCatgory">Ajouter une question</a>
+                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCatgory">Ajouter une
+                    question</a>
 
             </div>
 
@@ -57,48 +58,43 @@
                                 <td>{{ question.point }}</td>
 
 
-
                                 <td>
-                                                    <span class="dropdown dropstart">
-                                                        <a
-                                                                class="btn-icon btn btn-ghost btn-sm rounded-circle"
-                                                                href="#"
-                                                                role="button"
-                                                                id="courseDropdown"
-                                                                data-bs-toggle="dropdown"
-                                                                data-bs-offset="-20,20"
-                                                                aria-expanded="false">
-                                                            <i class="fe fe-more-vertical"></i>
-                                                        </a>
-                                                        <span class="dropdown-menu" aria-labelledby="courseDropdown">
-                                                            <span class="dropdown-header">Setting</span>
+                                     <span class="dropdown dropstart">
+                                    <a
+                                            class="btn-icon btn btn-ghost btn-sm rounded-circle"
+                                            href="#"
+                                            role="button"
+                                            id="courseDropdown"
+                                            data-bs-toggle="dropdown"
+                                            data-bs-offset="-20,20"
+                                            aria-expanded="false">
+                                        <i class="fe fe-more-vertical"></i>
+                                    </a>
+                                         <span class="dropdown-menu" aria-labelledby="courseDropdown">
+                                             <span class="dropdown-header">Setting</span>
 
+                                             <a class="dropdown-item"
+                                                href="{% url 'instructeur_detaille_question' question.id %}">
+                                                 <i class="fe fe-eye dropdown-item-icon"></i>
+                                                                Détail
+                                             </a>
 
-                                                            <a class="dropdown-item"
-                                                               href="{{ video.video.url }}" target="_blank">
-                                                                <i class="fe fe-eye dropdown-item-icon"></i>
-                                                                regarder
-                                                            </a>
-
-
-                                                            <a class="dropdown-item" onclick="return confirm('Supprimer la video ?')"
-                                                               href="{% url 'instructeur_suppression_de_la_video' video.id %}">
-                                                                <i class="fe fe-delete dropdown-item-icon"></i>
+                                             <a class="dropdown-item"
+                                                onclick="return confirm('Supprimer la question ?')"
+                                                href="{% url 'instructeur_supprimer_question_qcm' question.id %}">
+                                                 <i class="fe fe-delete dropdown-item-icon"></i>
                                                                 Supprimer
-                                                            </a>
+                                             </a>
 
-
-                                                        </span>
-                                                    </span>
+                                         </span>
+                                     </span>
                                 </td>
                             </tr>
-
 
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
-
 
             </div>
             <!-- Table -->
@@ -125,60 +121,29 @@
                         {% csrf_token %}
 
 
-
-
                         <div class="mb-3 mb-2">
-                            <label class="form-label" for="title">
-                                Nom
-                                <span class="text-danger">*</span>
+                            <label class="form-label" for="question">
+                                Question
+
                             </label>
-                            <input type="text" class="form-control" name="nom" placeholder="Nom de la vidéo"
-                                   id="nom" required/>
-                            <small>---</small>
-                            <div class="invalid-feedback">Entrez la durée de la vidéo</div>
+                            <input type="text" class="form-control" name="question" placeholder="La question"
+                                   id="question" required/>
+
+                            <div class="invalid-feedback">Entrez la question</div>
                         </div>
 
 
                         <div class="mb-3 mb-2">
-                            <label class="form-label" for="duree">
+                            <label class="form-label" for="point">
                                 Durée
                                 <span class="text-danger">*</span>
                             </label>
-                            <input type="number" class="form-control" name="duree" placeholder="Duree de la vidéo"
-                                   id="duree" required/>
-                            <small>---</small>
+                            <input type="number" class="form-control" name="point" placeholder="le point" value="1"
+                                   id="point" required/>
+
                             <div class="invalid-feedback">Entrez la durée de la vidéo</div>
                         </div>
 
-
-
-
-                        <div class="mb-3 mb-2">
-                            <label class="form-label" for="ordre">
-                                Ordre
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input type="number" class="form-control" name="ordre" placeholder="ordre de la vidéo"
-                                   id="ordre" required/>
-                            <small>---</small>
-                            <div class="invalid-feedback">Entrez l'odre de la vidéo</div>
-                        </div>
-
-
-
-
-
-
-                        <div class="mb-3 mb-2">
-                            <label class="form-label" for="title">
-                                La vidéo
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input type="file" accept="video/*" class="form-control" name="video" placeholder="la vidéo"
-                                   id="nom" required/>
-                            <small>---</small>
-                            <div class="invalid-feedback">Selectionner la vidéo</div>
-                        </div>
 
                         <div>
                             <button type="submit" class="btn btn-primary">Ajouter</button>

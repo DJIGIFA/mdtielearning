@@ -15,7 +15,7 @@ from .views import add_formation, add_categorie, del_categorie, get_categorie, s
     set_suive, get_suive, del_suive, add_participer, set_participer, participer_get_all, get_participer, del_participer, \
     get_formation_un, get_video_un, admin_formation_liste, admin_categorie, admin_sous_categorie, \
     admin_categorie_suppression, admin_categorie_modifier, admin_sous_categorie_modifier, \
-    admin_sous_categorie_suppression
+    admin_sous_categorie_suppression, liste_formation, detail_formation
 
 urlpatterns = [
     path("add", add_formation, name="add_formation"),
@@ -153,4 +153,12 @@ urlpatterns = [
 
     path("admin-formation-sous-categorie/del/<int:id>", admin_sous_categorie_suppression, name="admin_sous_categorie_suppression"),
 
+
+
+
+    # Public
+
+    path("liste/<int:id_sous_categorie>",liste_formation,name="liste_formation"),
+    path("liste",liste_formation,name="liste_formation"),
+    path("formation/detail/<str:slug>",detail_formation,name="detail_formation"),
 ]

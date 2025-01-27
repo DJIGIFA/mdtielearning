@@ -115,6 +115,10 @@ class Formation(models.Model):
         return self.chapitre_set.all()
 
     @property
+    def nombre_chaptire(self):
+        return len(self.chapitre_set.all())
+
+    @property
     def nombre_heur_str(self):
         return minute_to_heure(self.nombre_heur)
 
@@ -296,6 +300,10 @@ class Reponse(models.Model):
     reponse = models.TextField()
     correcte = models.BooleanField()
     date = models.DateField(auto_now_add=True)
+
+    @property
+    def etat(self):
+        return "Correcte" if self.correcte else "Incorrecte"
 
 
 class Examen(models.Model):

@@ -58,7 +58,7 @@ class Utilisateur(AbstractUser):
 
     @property
     def nombre_apprenant(self):
-        return sum(f.cour_set.all() for f in self.formation_set.all())
+        return sum(len(f.cour_set.all()) for f in self.formation_set.all())
 
 
 

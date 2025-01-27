@@ -1,0 +1,503 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+
+    <!--hero section-->
+    <!--Figma design-->
+    <section class="py-md-5 pb-5">
+        <div class="container">
+            <div class="row gy-5 gx-xl-8">
+                <div class="col-xl-8 col-12">
+                    <div class="d-flex flex-column gap-5 product-content">
+                        <div class="d-flex flex-column gap-5">
+                            <div class="d-flex flex-column gap-2">
+                                <h1 class="mb-0 display-4">{{ formation.nom }}</h1>
+                            </div>
+                            <div class="d-flex flex-column gap-lg-3 gap-2">
+                                <div class="d-flex flex-lg-row flex-column gap-2 gap-md-3 align-items-lg-center">
+                      <span class="d-flex flex-row gap-2 lh-1 align-items-center">
+
+                      </span>
+                                    <span class="d-flex flex-row gap-2 align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-people" viewBox="0 0 16 16">
+                          <path
+                                  d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+                        </svg>
+                        <span class="text-secondary">{{ formation.nombre_apprenant }} Apprenants</span>
+                      </span>
+                                    <span class="d-flex flex-row gap-2 align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-exclamation-circle text-gray-500" viewBox="0 0 16 16">
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                          <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                        </svg>
+                        <span class="text-secondary">Mise à jour {{ formation.dernier_mise_a_jour }}</span>
+                      </span>
+
+                                    <span class="d-flex flex-row gap-1 align-items-center">
+                        <svg class="me-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                          <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+                          <rect x="7" y="5" width="2" height="9" rx="1" fill="#754FFE"></rect>
+                          <rect x="11" y="2" width="2" height="12" rx="1" fill="#754FFE"></rect>
+                        </svg>
+                        <span class="text-secondary">{{ formation.sous_categorie.nom }}</span>
+                      </span>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column gap-3">
+                            <h2 class="mb-0">Contenu</h2>
+
+
+                            <div class="accordion-single border" id="accordionExample">
+
+
+                                {% for chapitre in formation.all_chaptire %}
+
+
+                                    <div class="accordion-item rounded-0 mb-n1">
+                                        <div class="accordion-header-single">
+                                            <div class="d-flex flex-row align-items-center justify-content-between">
+                                                <a class="h4 mb-0" data-bs-toggle="collapse" href="#{{ chapitre.id }}"
+                                                   role="button" aria-expanded="false" aria-controls="{{ chapitre.id }}">
+                                                    <div class="d-flex align-items-center gap-3 flex-row">
+                                                        <div>
+                                <span class="chevron-arrow">
+                                  <i class="fe fe-chevron-down fs-4"></i>
+                                </span>
+                                                        </div>
+                                                        <div class="">
+                                                            <div class="">{{ chapitre.nom }}</div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <span class="d-flex flex-row gap-2 d-none d-md-block">
+                            <span class="text-secondary fw-medium">{{ chapitre.nombre_video }} vidéos,</span>
+                            <span class="text-secondary fw-medium">{{ chapitre.duree }}</span>
+                          </span>
+                                            </div>
+                                        </div>
+                                        <div id="{{ chapitre.id }}" class="accordion-collapse collapse"
+                                             data-bs-parent="#accordionExample">
+                                            <div class="accordion-body-single">
+                                                <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+
+                                                    {% for video in chapitre.all_video %}
+                                                    <li class="d-flex flex-row align-items-center justify-content-between gap-2">
+                                                        <div class="d-flex flex-row gap-2 align-items-md-center">
+                                <span>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                       class="bi bi-camera-video" viewBox="0 0 16 16">
+                                    <path
+                                            fill-rule="evenodd"
+                                            d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"/>
+                                  </svg>
+                                </span>
+
+                                                            <div>{{ video.nom }}</div>
+                                                        </div>
+                                                        <div class="">
+                                                            <div class="d-flex flex-row gap-3">
+
+                                                                <div class="text-gray-500 d-none d-md-block">{{ video.duree_str }}</div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    {% endfor %}
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                {% endfor %}
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="d-flex flex-column gap-3">
+                            <h2 class="mb-0">Profile - prérequis - objectifs</h2>
+                            <div class="border rounded-3 p-4">
+                                <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+
+                                    <li class="d-flex flex-row gap-2">
+                        <span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                               class="bi bi-check-circle-fill text-success" viewBox="0 0 16 16">
+                            <path
+                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                          </svg>
+                        </span>
+                                        <span>{{ formation.profile_destine }}</span>
+                                    </li>
+                                    <li class="d-flex flex-row gap-2">
+                        <span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                               class="bi bi-check-circle-fill text-success" viewBox="0 0 16 16">
+                            <path
+                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                          </svg>
+                        </span>
+                                        <span>{{ formation.prerequis }}</span>
+                                    </li>
+                                    <li class="d-flex flex-row gap-2">
+                        <span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                               class="bi bi-check-circle-fill text-success" viewBox="0 0 16 16">
+                            <path
+                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                          </svg>
+                        </span>
+                                        <span>{{ formation.objectif_du_cours }}</span>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column gap-3">
+                            <h2 class="mb-0">Ce cours contient</h2>
+                            <div class="border rounded-3 p-4">
+                                <div class="row gy-2">
+                                    <div class="col-lg-6">
+                                        <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+                                            <li class="d-flex flex-row gap-2">
+                            <span>
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                   xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_7767_6768)">
+                                  <path
+                                          d="M12.5 8.33331L16.2942 6.43664C16.4212 6.37317 16.5623 6.34321 16.7042 6.3496C16.846 6.35599 16.9839 6.39852 17.1047 6.47315C17.2255 6.54778 17.3252 6.65204 17.3944 6.77604C17.4636 6.90003 17.4999 7.03965 17.5 7.18164V12.8183C17.4999 12.9603 17.4636 13.0999 17.3944 13.2239C17.3252 13.3479 17.2255 13.4522 17.1047 13.5268C16.9839 13.6014 16.846 13.644 16.7042 13.6504C16.5623 13.6567 16.4212 13.6268 16.2942 13.5633L12.5 11.6666V8.33331Z"
+                                          stroke="#754FFE"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                  <path
+                                          d="M2.5 6.66667C2.5 6.22464 2.67559 5.80072 2.98816 5.48816C3.30072 5.17559 3.72464 5 4.16667 5H10.8333C11.2754 5 11.6993 5.17559 12.0118 5.48816C12.3244 5.80072 12.5 6.22464 12.5 6.66667V13.3333C12.5 13.7754 12.3244 14.1993 12.0118 14.5118C11.6993 14.8244 11.2754 15 10.8333 15H4.16667C3.72464 15 3.30072 14.8244 2.98816 14.5118C2.67559 14.1993 2.5 13.7754 2.5 13.3333V6.66667Z"
+                                          stroke="#754FFE"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_7767_6768">
+                                    <rect width="20" height="20" fill="white"/>
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                            </span>
+                                                <span>{{ formation.nombre_heur_str }} de vidéos</span>
+                                            </li>
+                                            <li class="d-flex flex-row gap-2">
+                            <span>
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                   xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_7767_6774)">
+                                  <path
+                                          d="M2.5 15.8333C3.64014 15.175 4.93347 14.8285 6.25 14.8285C7.56652 14.8285 8.85986 15.175 10 15.8333C11.1401 15.175 12.4335 14.8285 13.75 14.8285C15.0665 14.8285 16.3599 15.175 17.5 15.8333"
+                                          stroke="#754FFE"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                  <path
+                                          d="M2.5 5.00005C3.64014 4.34179 4.93347 3.99524 6.25 3.99524C7.56652 3.99524 8.85986 4.34179 10 5.00005C11.1401 4.34179 12.4335 3.99524 13.75 3.99524C15.0665 3.99524 16.3599 4.34179 17.5 5.00005"
+                                          stroke="#754FFE"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                  <path d="M2.5 5V15.8333" stroke="#754FFE" stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                  <path d="M10 5V15.8333" stroke="#754FFE" stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                  <path d="M17.5 5V15.8333" stroke="#754FFE" stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_7767_6774">
+                                    <rect width="20" height="20" fill="white"/>
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                            </span>
+                                                <span>{{ formation.nombre_chaptire }} Chapitres</span>
+                                            </li>
+
+                                            <li class="d-flex flex-row gap-2">
+                            <span>
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                   xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_7767_6788)">
+                                  <path
+                                          d="M9.99998 9.99996C9.54271 10.8876 8.92963 11.6859 8.18998 12.3566C7.72384 12.8229 7.1299 13.1405 6.48327 13.2692C5.83664 13.3979 5.16637 13.3319 4.55722 13.0797C3.94808 12.8274 3.42742 12.4002 3.06111 11.852C2.69479 11.3038 2.49927 10.6593 2.49927 9.99996C2.49927 9.34065 2.69479 8.69614 3.06111 8.14796C3.42742 7.59977 3.94808 7.17253 4.55722 6.92027C5.16637 6.668 5.83664 6.60205 6.48327 6.73075C7.1299 6.85945 7.72384 7.17702 8.18998 7.64329C8.92963 8.31407 9.54271 9.11231 9.99998 9.99996ZM9.99998 9.99996C10.4573 9.11231 11.0703 8.31407 11.81 7.64329C12.2761 7.17702 12.8701 6.85945 13.5167 6.73075C14.1633 6.60205 14.8336 6.668 15.4427 6.92027C16.0519 7.17253 16.5725 7.59977 16.9389 8.14796C17.3052 8.69614 17.5007 9.34065 17.5007 9.99996C17.5007 10.6593 17.3052 11.3038 16.9389 11.852C16.5725 12.4002 16.0519 12.8274 15.4427 13.0797C14.8336 13.3319 14.1633 13.3979 13.5167 13.2692C12.8701 13.1405 12.2761 12.8229 11.81 12.3566C11.0703 11.6859 10.4573 10.8876 9.99998 9.99996Z"
+                                          stroke="#754FFE"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_7767_6788">
+                                    <rect width="20" height="20" fill="white"/>
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                            </span>
+                                                <span>Accès à vie</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+                                            <li class="d-flex flex-row gap-2">
+                            <span>
+                              <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
+                                   xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_7767_6793)">
+                                  <path
+                                          d="M10.5 12.5C10.5 13.163 10.7634 13.7989 11.2322 14.2678C11.7011 14.7366 12.337 15 13 15C13.663 15 14.2989 14.7366 14.7678 14.2678C15.2366 13.7989 15.5 13.163 15.5 12.5C15.5 11.837 15.2366 11.2011 14.7678 10.7322C14.2989 10.2634 13.663 10 13 10C12.337 10 11.7011 10.2634 11.2322 10.7322C10.7634 11.2011 10.5 11.837 10.5 12.5Z"
+                                          stroke="#754FFE"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                  <path d="M11.3335 14.5834V18.3334L13.0002 17.0834L14.6668 18.3334V14.5834"
+                                        stroke="#754FFE" stroke-linecap="round" stroke-linejoin="round"/>
+                                  <path
+                                          d="M8.83333 15.8333H4.66667C4.22464 15.8333 3.80072 15.6577 3.48816 15.3451C3.17559 15.0326 3 14.6087 3 14.1666V5.83329C3 4.91663 3.75 4.16663 4.66667 4.16663H16.3333C16.7754 4.16663 17.1993 4.34222 17.5118 4.65478C17.8244 4.96734 18 5.39127 18 5.83329V14.1666C17.9997 14.4589 17.9225 14.746 17.7763 14.999C17.63 15.252 17.4198 15.4622 17.1667 15.6083"
+                                          stroke="#754FFE"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                  <path d="M5.5 7.5H15.5" stroke="#754FFE" stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                  <path d="M5.5 10H8" stroke="#754FFE" stroke-linecap="round" stroke-linejoin="round"/>
+                                  <path d="M5.5 12.5H7.16667" stroke="#754FFE" stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_7767_6793">
+                                    <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                            </span>
+                                                <span>Certification</span>
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex flex-column gap-3">
+                            <h2 class="mb-0">Description</h2>
+                            <div class="border rounded-3 p-4 d-flex flex-column">
+                                <div class="d-flex flex-column gap-3">
+
+
+                                </div>
+
+                                <div class="collapse" id="collapseContent">
+                                    <p class="mb-0">
+                                        {{ formation.description }}
+                                    </p>
+                                </div>
+                                <div class="mt-3">
+                                    <a class="btn-collapse fw-semibold" id="toggleButton" data-bs-toggle="collapse"
+                                       href="#collapseContent" aria-expanded="false" aria-controls="collapseContent">
+                                        Show More
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                             fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column gap-3">
+                            <h2 class="mb-0">Instructeur</h2>
+                            <div class="border rounded-3 p-4 d-flex flex-column gap-5">
+                                <div class="d-flex flex-row align-items-center gap-3">
+                                    <div class="position-relative">
+
+                                        {% if formation.instructeur.avatar %}
+                                            <img src="{{ formation.instructeur.avatar.url }}" alt="avatar"
+                                                 class="rounded-circle avatar-xl"/>
+                                        {% else %}
+                                            <img src="{% static 'assets/images/avatar/avatar-1.jpg' %}" alt="avatar"
+                                                 class="rounded-circle avatar-xl"/>
+                                        {% endif %}
+
+                                        <a href="#!" class="position-absolute mt-7 ms-n4" data-bs-toggle="tooltip"
+                                           data-placement="top" title="Verifed">
+                                            <img src="{% static 'assets/images/course/check.svg' %}" alt="check"
+                                                 height="30"
+                                                 width="30"/>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <h3 class="mb-0 text-primary">{{ formation.instructeur.first_name }} {{ formation.instructeur.last_name }}</h3>
+                                        <span>{{ formation.instructeur.travail }}</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <ul class="list-unstyled mb-0 d-flex flex-column gap-3">
+
+
+                                        <li class="d-flex flex-row gap-2">
+                          <span class="align-baseline lh-1">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <g clip-path="url(#clip0_7767_6890)">
+                                <path
+                                        d="M8.33325 10.8334C8.33325 11.2754 8.50885 11.6994 8.82141 12.0119C9.13397 12.3245 9.55789 12.5001 9.99992 12.5001C10.4419 12.5001 10.8659 12.3245 11.1784 12.0119C11.491 11.6994 11.6666 11.2754 11.6666 10.8334C11.6666 10.3914 11.491 9.96746 11.1784 9.6549C10.8659 9.34234 10.4419 9.16675 9.99992 9.16675C9.55789 9.16675 9.13397 9.34234 8.82141 9.6549C8.50885 9.96746 8.33325 10.3914 8.33325 10.8334Z"
+                                        stroke="#475569"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                <path
+                                        d="M6.66675 17.5V16.6667C6.66675 16.2246 6.84234 15.8007 7.1549 15.4882C7.46746 15.1756 7.89139 15 8.33341 15H11.6667C12.1088 15 12.5327 15.1756 12.8453 15.4882C13.1578 15.8007 13.3334 16.2246 13.3334 16.6667V17.5"
+                                        stroke="#475569"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                <path
+                                        d="M12.5 4.16667C12.5 4.60869 12.6756 5.03262 12.9882 5.34518C13.3007 5.65774 13.7246 5.83333 14.1667 5.83333C14.6087 5.83333 15.0326 5.65774 15.3452 5.34518C15.6577 5.03262 15.8333 4.60869 15.8333 4.16667C15.8333 3.72464 15.6577 3.30072 15.3452 2.98816C15.0326 2.67559 14.6087 2.5 14.1667 2.5C13.7246 2.5 13.3007 2.67559 12.9882 2.98816C12.6756 3.30072 12.5 3.72464 12.5 4.16667Z"
+                                        stroke="#475569"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                <path
+                                        d="M14.1667 8.33325H15.8334C16.2754 8.33325 16.6994 8.50885 17.0119 8.82141C17.3245 9.13397 17.5001 9.55789 17.5001 9.99992V10.8333"
+                                        stroke="#475569"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                <path
+                                        d="M4.16675 4.16667C4.16675 4.60869 4.34234 5.03262 4.6549 5.34518C4.96746 5.65774 5.39139 5.83333 5.83341 5.83333C6.27544 5.83333 6.69937 5.65774 7.01193 5.34518C7.32449 5.03262 7.50008 4.60869 7.50008 4.16667C7.50008 3.72464 7.32449 3.30072 7.01193 2.98816C6.69937 2.67559 6.27544 2.5 5.83341 2.5C5.39139 2.5 4.96746 2.67559 4.6549 2.98816C4.34234 3.30072 4.16675 3.72464 4.16675 4.16667Z"
+                                        stroke="#475569"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                <path
+                                        d="M2.5 10.8333V9.99992C2.5 9.55789 2.67559 9.13397 2.98816 8.82141C3.30072 8.50885 3.72464 8.33325 4.16667 8.33325H5.83333"
+                                        stroke="#475569"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_7767_6890">
+                                  <rect width="20" height="20" fill="white"/>
+                                </clipPath>
+                              </defs>
+                            </svg>
+                          </span>
+                                            <span class="fw-semibold">{{ formation.instructeur.nombre_apprenant }}</span>
+                                            Students
+                                        </li>
+                                        <li class="d-flex flex-row gap-2">
+                          <span class="align-baseline lh-1">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <g clip-path="url(#clip0_7767_6900)">
+                                <path
+                                        d="M12.5 8.33343L16.2942 6.43677C16.4212 6.37329 16.5623 6.34333 16.7042 6.34972C16.846 6.35611 16.9839 6.39864 17.1047 6.47327C17.2255 6.5479 17.3252 6.65216 17.3944 6.77616C17.4636 6.90015 17.4999 7.03977 17.5 7.18177V12.8184C17.4999 12.9604 17.4636 13.1 17.3944 13.224C17.3252 13.348 17.2255 13.4523 17.1047 13.5269C16.9839 13.6016 16.846 13.6441 16.7042 13.6505C16.5623 13.6569 16.4212 13.6269 16.2942 13.5634L12.5 11.6668V8.33343Z"
+                                        stroke="#475569"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                <path
+                                        d="M2.5 6.66667C2.5 6.22464 2.67559 5.80072 2.98816 5.48816C3.30072 5.17559 3.72464 5 4.16667 5H10.8333C11.2754 5 11.6993 5.17559 12.0118 5.48816C12.3244 5.80072 12.5 6.22464 12.5 6.66667V13.3333C12.5 13.7754 12.3244 14.1993 12.0118 14.5118C11.6993 14.8244 11.2754 15 10.8333 15H4.16667C3.72464 15 3.30072 14.8244 2.98816 14.5118C2.67559 14.1993 2.5 13.7754 2.5 13.3333V6.66667Z"
+                                        stroke="#475569"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_7767_6900">
+                                  <rect width="20" height="20" fill="white"/>
+                                </clipPath>
+                              </defs>
+                            </svg>
+                          </span>
+                                            <span class="fw-semibold">{{ formation.instructeur.nombre_formation }}</span>
+                                            Formations
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <aside class="col-xl-4 col-12">
+                    <div id="sidebar">
+                        <div class="sidebar__inner">
+                            <div class="d-flex flex-column gap-4">
+                                <div class="card">
+                                    <a href="#!"><img src="{{ formation.miniature.url }}" alt="figma"
+                                                      class="img-fluid w-100 card-img-top"/></a>
+                                    <div class="card-body d-flex flex-column gap-4">
+                                        <div class="d-flex flex-column gap-1">
+                                            <div class="d-flex flex-row gap-2 align-items-center">
+                                                <h3 class="h2 mb-0">{{ formation.prix }} F</h3>
+                                            </div>
+
+                                        </div>
+                                        <div class="d-grid flex-column gap-2">
+                                            <a href="#!" class="btn btn-primary">Acheter</a>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <ul class="list-unstyled mb-0 d-flex flex-column gap-4">
+                                            <li class="d-flex flex-row gap-3 align-items-center">
+                                                <div class="bg-light-primary text-primary icon-shape icon-lg rounded-circle flex-shrink-0">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                                d="M16.5 1.5H7.5C6.90326 1.5 6.33097 1.73705 5.90901 2.15901C5.48705 2.58097 5.25 3.15326 5.25 3.75V20.25C5.25 20.8467 5.48705 21.419 5.90901 21.841C6.33097 22.2629 6.90326 22.5 7.5 22.5H16.5C17.0967 22.5 17.669 22.2629 18.091 21.841C18.5129 21.419 18.75 20.8467 18.75 20.25V3.75C18.75 3.15326 18.5129 2.58097 18.091 2.15901C17.669 1.73705 17.0967 1.5 16.5 1.5ZM6.75 6H17.25V18H6.75V6ZM7.5 3H16.5C16.6989 3 16.8897 3.07902 17.0303 3.21967C17.171 3.36032 17.25 3.55109 17.25 3.75V4.5H6.75V3.75C6.75 3.55109 6.82902 3.36032 6.96967 3.21967C7.11032 3.07902 7.30109 3 7.5 3ZM16.5 21H7.5C7.30109 21 7.11032 20.921 6.96967 20.7803C6.82902 20.6397 6.75 20.4489 6.75 20.25V19.5H17.25V20.25C17.25 20.4489 17.171 20.6397 17.0303 20.7803C16.8897 20.921 16.6989 21 16.5 21Z"
+                                                                fill="#754FFE"/>
+                                                    </svg>
+                                                </div>
+                                                <span>Accédez à vos cours à tout moment, où que vous soyez avec un ordinateur, une tablette ou un smartphone</span>
+                                            </li>
+                                            <li class="d-flex flex-row gap-3 align-items-center">
+                                                <div class="bg-light-primary text-primary icon-shape icon-lg rounded-circle flex-shrink-0">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                                d="M12 2.25C10.0716 2.25 8.18657 2.82183 6.58319 3.89317C4.97982 4.96451 3.73013 6.48726 2.99218 8.26884C2.25422 10.0504 2.06114 12.0108 2.43735 13.9021C2.81355 15.7934 3.74215 17.5307 5.10571 18.8943C6.46928 20.2579 8.20656 21.1865 10.0979 21.5627C11.9892 21.9389 13.9496 21.7458 15.7312 21.0078C17.5127 20.2699 19.0355 19.0202 20.1068 17.4168C21.1782 15.8134 21.75 13.9284 21.75 12C21.7473 9.41498 20.7192 6.93661 18.8913 5.10872C17.0634 3.28084 14.585 2.25273 12 2.25ZM12 20.25C10.3683 20.25 8.77326 19.7661 7.41655 18.8596C6.05984 17.9531 5.00242 16.6646 4.378 15.1571C3.75358 13.6496 3.5902 11.9908 3.90853 10.3905C4.22685 8.79016 5.01259 7.32015 6.16637 6.16637C7.32016 5.01259 8.79017 4.22685 10.3905 3.90852C11.9909 3.59019 13.6497 3.75357 15.1571 4.37799C16.6646 5.00242 17.9531 6.05984 18.8596 7.41655C19.7661 8.77325 20.25 10.3683 20.25 12C20.2475 14.1873 19.3775 16.2843 17.8309 17.8309C16.2843 19.3775 14.1873 20.2475 12 20.25ZM18 12C18 12.1989 17.921 12.3897 17.7803 12.5303C17.6397 12.671 17.4489 12.75 17.25 12.75H12C11.8011 12.75 11.6103 12.671 11.4697 12.5303C11.329 12.3897 11.25 12.1989 11.25 12V6.75C11.25 6.55109 11.329 6.36032 11.4697 6.21967C11.6103 6.07902 11.8011 6 12 6C12.1989 6 12.3897 6.07902 12.5303 6.21967C12.671 6.36032 12.75 6.55109 12.75 6.75V11.25H17.25C17.4489 11.25 17.6397 11.329 17.7803 11.4697C17.921 11.6103 18 11.8011 18 12Z"
+                                                                fill="#754FFE"/>
+                                                    </svg>
+                                                </div>
+                                                <span>Accès illimité. Suivez vos cours à votre rythme et à votre heure.</span>
+                                            </li>
+                                            <li class="d-flex flex-row gap-3 align-items-center">
+                                                <div class="bg-light-primary text-primary icon-shape icon-lg rounded-circle flex-shrink-0">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                                d="M15.4163 9.87562L10.9163 6.87562C10.8033 6.80025 10.6719 6.75696 10.5363 6.75039C10.4006 6.74382 10.2657 6.77421 10.146 6.83831C10.0263 6.90241 9.9262 6.99782 9.85645 7.11436C9.7867 7.2309 9.74991 7.36419 9.75 7.5V13.5C9.74991 13.6358 9.7867 13.7691 9.85645 13.8856C9.9262 14.0022 10.0263 14.0976 10.146 14.1617C10.2657 14.2258 10.4006 14.2562 10.5363 14.2496C10.6719 14.243 10.8033 14.1998 10.9163 14.1244L15.4163 11.1244C15.5191 11.0559 15.6035 10.9631 15.6618 10.8542C15.7202 10.7452 15.7507 10.6236 15.7507 10.5C15.7507 10.3764 15.7202 10.2548 15.6618 10.1458C15.6035 10.0369 15.5191 9.94409 15.4163 9.87562ZM11.25 12.0984V8.90625L13.6481 10.5L11.25 12.0984ZM20.25 3.75H3.75C3.35218 3.75 2.97064 3.90804 2.68934 4.18934C2.40804 4.47064 2.25 4.85218 2.25 5.25V15.75C2.25 16.1478 2.40804 16.5294 2.68934 16.8107C2.97064 17.092 3.35218 17.25 3.75 17.25H20.25C20.6478 17.25 21.0294 17.092 21.3107 16.8107C21.592 16.5294 21.75 16.1478 21.75 15.75V5.25C21.75 4.85218 21.592 4.47064 21.3107 4.18934C21.0294 3.90804 20.6478 3.75 20.25 3.75ZM20.25 15.75H3.75V5.25H20.25V15.75ZM21.75 19.5C21.75 19.6989 21.671 19.8897 21.5303 20.0303C21.3897 20.171 21.1989 20.25 21 20.25H3C2.80109 20.25 2.61032 20.171 2.46967 20.0303C2.32902 19.8897 2.25 19.6989 2.25 19.5C2.25 19.3011 2.32902 19.1103 2.46967 18.9697C2.61032 18.829 2.80109 18.75 3 18.75H21C21.1989 18.75 21.3897 18.829 21.5303 18.9697C21.671 19.1103 21.75 19.3011 21.75 19.5Z"
+                                                                fill="#754FFE"/>
+                                                    </svg>
+                                                </div>
+                                                <span>Vidéos, quiz et contenu interactif.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+    <!--Figma design-->
+    <!--More course-->
+
+{% endblock %}

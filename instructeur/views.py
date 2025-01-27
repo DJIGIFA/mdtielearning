@@ -1,22 +1,52 @@
+from functools import reduce
+from operator import or_
+
 from django.contrib import messages
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from formation.models import Formation, SousCategorie, Chapitre, Video, Qcm
+from formation.models import Formation, SousCategorie, Chapitre, Video, Qcm, Question, Reponse
 
 
 # Create your views here.
 
 
 def instructeur_index(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse("web_connexion"))
 
+    utilisateur = request.user
 
-    return render(request, "instructeur/instructeur_index.html")
+    all_formations = Formation.objects.all().filter(instructeur=utilisateur)
+
+    nombre_formation = len(all_formations)
+
+    nombre_apprenant = sum([ f.cour_set.all().count() for f in all_formations ])
+
+    context = {
+        'nombre_formation': nombre_formation,
+        "nombre_apprenant": nombre_apprenant,
+    }
+
+    return render(request, "instructeur/instructeur_index.html",context=context)
 
 
 def instructeur_formation_liste(request):
 
+    if not request.user.is_authenticated:
+        messages.warning(request,"connectez-vous")
+        return redirect(reverse("web_connexion"))
+
     all_formations = Formation.objects.all().filter(instructeur=request.user)
+
+
+    if request.method == "GET":
+        form = request.GET
+        nom_formation = form.get("nom_formation")
+        if nom_formation:
+            liste_str = nom_formation.split()
+            all_formations = all_formations.filter(reduce(or_, [Q(nom__icontains=s) for s in liste_str]))
 
     context = {
         "all_formations": all_formations,
@@ -25,11 +55,8 @@ def instructeur_formation_liste(request):
     return render(request, "instructeur/instructeur_formation_liste.html",context=context)
 
 
-
-
 def instructeur_add_formation(request):
     sous_categories = SousCategorie.objects.all()
-
 
     if request.method == "POST":
         form = request.POST
@@ -177,10 +204,6 @@ def instructeur_detaille_formation(request,id):
     return render(request, "instructeur/instructeur_detaille_formation.html",context=context)
 
 
-
-
-
-
 def instructeur_edit_chapitre(request,id):
     chapitre = Chapitre.objects.all().filter(id=id).first()
 
@@ -247,9 +270,6 @@ def instructeur_detaille_chapitre(request,id):
     return render(request, "instructeur/instructeur_detaille_chapitre.html",context=context)
 
 
-
-
-
 def instructeur_suppression_de_la_video(request,id):
     video = Video.objects.all().filter(id=id).first()
 
@@ -308,12 +328,70 @@ def instructeur_detaille_qcm(request, id):
     qcm = Qcm.objects.all().filter(id=id).first()
 
     if request.method == "POST":
-        ...
+        form = request.POST
+        question = form.get("question")
+        point = form.get("point")
+
+        new_question = Question(
+            qcm=qcm,
+            question=question,
+            point=point,
+        )
+
+        new_question.save()
+        messages.success(request, "Question ajouter")
 
 
     return render(request,"instructeur/instructeur_detaille_qcm.html",context={"qcm":qcm})
 
 
-def instructeur_quizz(request):
 
-    return render(request, "instructeur/instructeur_quizz.html")
+def instructeur_supprimer_question_qcm(request, id):
+
+
+    question = Question.objects.all().filter(id=id).first()
+    qcm = question.qcm
+    if question:
+        question.delete()
+        messages.success(request, "Question supprimer")
+
+    return redirect(reverse('instructeur_detaille_qcm', kwargs={'id': qcm.id}))
+
+
+def instructeur_detaille_question(request,id):
+
+    question = Question.objects.all().filter(id=id).first()
+    # TODO securité
+
+    if request.method == "POST":
+        form = request.POST
+        print(form)
+        reponse = form.get("reponse")
+        correcte = form.get("correcte") == "1"
+
+
+
+        new_reponse = Reponse(
+            reponse=reponse,
+            correcte=correcte ,
+            question=question,
+        )
+
+        new_reponse.save()
+        messages.success(request, "Reponse ajouter")
+
+
+    return render(request, "instructeur/instructeur_detaille_question.html",context={"question":question})
+
+
+def delete_reponse_qcm(request,id):
+    reponse = Reponse.objects.all().filter(id=id).first()
+    question = reponse.question
+    if reponse:
+        reponse.delete()
+        messages.success(request, "Reponse supprimer")
+    else:
+        messages.warning(request, "Reponse non existant")
+
+
+    return redirect(reverse('instructeur_detaille_question', kwargs={'id': question.id}))

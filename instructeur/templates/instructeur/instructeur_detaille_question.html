@@ -1,0 +1,137 @@
+{% extends 'instructeur_base.html' %}
+
+{% load static %}
+
+{% block instructeur_body %}
+
+
+    <div class="col-lg-9 col-md-8 col-12">
+
+
+        <!-- Card -->
+        <div class="card mb-4">
+            <!-- Card header -->
+            <div class="card-header">
+                <span class="mb-0 h3">Liste des reponses</span>
+                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newCatgory">Ajouter une
+                    reponse</a>
+
+            </div>
+
+            <!-- Card body -->
+            <div class="card-body">
+
+                <div class="container-fluid text-center m-2">
+                    {{ question.question }}
+                </div>
+                <!-- Form -->
+                <!-- Table -->
+                <div class="table-responsive overflow-y-hidden">
+                    <table class="table mb-0 text-nowrap table-hover table-centered text-nowrap">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Reponse</th>
+                            <th>Correct</th>
+
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for reponse in question.all_response %}
+
+                            <tr>
+                                <td>
+                                    {{ reponse.reponse }}
+                                </td>
+                                <td>{{ reponse.etat }}</td>
+
+                                <td>
+                                     <span class="dropdown dropstart">
+                                    <a class="btn-icon btn btn-ghost btn-sm rounded-circle"
+                                       href="#"
+                                       role="button"
+                                       id="courseDropdown"
+                                       data-bs-toggle="dropdown"
+                                       data-bs-offset="-20,20"
+                                       aria-expanded="false">
+                                       <i class="fe fe-more-vertical"></i>
+                                        </a>
+                                        <span class="dropdown-menu" aria-labelledby="courseDropdown">
+                                        <span class="dropdown-header">Setting</span>
+
+
+
+                                            <a class="dropdown-item"
+                                               onclick="return confirm('Supprimer la reponse ?')"
+                                               href="{% url 'delete_reponse_qcm' reponse.id %}">
+                                                                <i class="fe fe-delete dropdown-item-icon"></i>
+                                                                Supprimer
+                                            </a>
+                                             </span>
+                                     </span>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Table -->
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="newCatgory" tabindex="-1" role="dialog" aria-labelledby="newCatgoryLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title mb-0" id="newCatgoryLabel">Ajout d'une reponse</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+
+                        <div class="mb-3 mb-2">
+                            <label class="form-label" for="reponse">
+                                Reponse
+
+                            </label>
+                            <input type="text" class="form-control" name="reponse" placeholder="La reponse"
+                                   id="reponse" required/>
+
+                            <div class="invalid-feedback">Entrez la question</div>
+                        </div>
+
+
+                        <div class="mb-3 mb-2">
+                            <label class="form-label" for="point">
+                                Durée
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select name="correcte" id="correcte" class="form-control" required>
+                                <option value="" selected>Choisissez</option>
+                                <option value="1">correcte</option>
+                                <option value="0">incorrecte</option>
+                            </select>
+                            <div class="invalid-feedback">Choisir si c'est la bonne reponse ou non</div>
+                        </div>
+
+
+                        <div>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

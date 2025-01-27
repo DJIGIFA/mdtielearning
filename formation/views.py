@@ -4153,3 +4153,45 @@ def admin_sous_categorie_suppression(request, id):
         messages.warning(request, "Categorie non trouver")
 
     return redirect(reverse("admin_sous_categorie"))
+
+
+"""
+Interface public
+"""
+
+# Public liste_formation
+def liste_formation(request,id_sous_categorie=None):
+
+    # TODO Pagination
+    all_formation = None
+    if id_sous_categorie:
+        sous_categorie = SousCategorie.objects.all().filter(id=id_sous_categorie).first()
+        if sous_categorie:
+            all_formation = sous_categorie.all_formation
+    else:
+        all_formation = Formation.objects.all()
+
+    all_categorie = Categorie.objects.all()
+    context = {
+        "all_formation" :all_formation,
+        "all_categorie":all_categorie
+    }
+
+    if sous_categorie:
+        context["sous_categorie"] = sous_categorie
+
+    return render(request,"formation/liste_formation.html", context=context)
+
+def detail_formation(request, slug):
+    formation = Formation.objects.all().filter(slug=slug).first()
+
+    # TODO securité
+
+    all_categorie = Categorie.objects.all()
+
+    context = {
+        "formation":formation,
+        "all_categorie":all_categorie
+    }
+
+    return render(request,"formation/detail_formation.html",context=context)

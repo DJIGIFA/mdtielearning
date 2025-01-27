@@ -704,3 +704,9 @@ def admin_apprenant_liste(request):
 
     return render(request, "utilisateur/admin/admin_apprenant_liste.html",context=context)
 
+
+
+def contact(request):
+
+    return render(request,"utilisateur/contact.html")
+
