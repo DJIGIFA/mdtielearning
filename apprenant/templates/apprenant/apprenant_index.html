@@ -1,0 +1,30 @@
+{% extends "apprenant/apprenant_base.html" %}
+{% load static %}
+
+
+{% block apprenant_body %}
+
+    <div class="col-lg-9 col-md-8 col-12">
+        <div class="row">
+
+
+            <div class="col-lg-4 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <div class="p-4">
+                        <span class="fs-6 text-uppercase fw-semibold">Cours</span>
+                        <h2 class="mt-4 fw-bold mb-1 d-flex align-items-center h1 lh-1">{{ nombre_de_cour }}</h2>
+                        <span class="d-flex justify-content-between align-items-center">
+                        <span></span>
+                        <span class="badge bg-info ms-2"></span>
+                      </span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}

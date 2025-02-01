@@ -1,0 +1,275 @@
+{% extends 'apprenant/apprenant_base.html' %}
+
+{% load static %}
+
+{% block apprenant_body %}
+
+
+    <div class="col-lg-9 col-md-8 col-12">
+        <!-- Card -->
+        <div class="card mb-4">
+            <!-- Card header -->
+            <div class="card-header">
+                <h3 class="mb-0">Détaille de la formation ({{ cour.formation.nom }})</h3>
+            </div>
+            <!-- Card body -->
+            <div class="card-body">
+                <!-- Form -->
+
+
+            </div>
+            <!-- Table -->
+
+        </div>
+
+        <!-- Card -->
+        <div class="card mb-4">
+            <!-- Card header -->
+            <div class="card-header">
+                <span class="mb-0 h3">Liste des chapitres</span>
+            </div>
+
+            <!-- Card body -->
+            <div class="card-body">
+                <!-- Form -->
+                <!-- Table -->
+                <div class="table-responsive overflow-y-hidden">
+                    <table class="table mb-0 text-nowrap table-hover table-centered text-nowrap">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Nom</th>
+                            <th>N. Videos</th>
+                            <th>Durée</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for chapitre in cour.formation.all_chaptire %}
+
+
+                            <tr>
+                                <td>
+                                    {{ chapitre.nom }}
+                                </td>
+                                <td>{{ chapitre.nombre_video }}</td>
+                                <td>{{ chapitre.duree }}</td>
+
+
+                                <td>
+                                                    <span class="dropdown dropstart">
+                                                        <a
+                                                                class="btn-icon btn btn-ghost btn-sm rounded-circle"
+                                                                href="#"
+                                                                role="button"
+                                                                id="courseDropdown"
+                                                                data-bs-toggle="dropdown"
+                                                                data-bs-offset="-20,20"
+                                                                aria-expanded="false">
+                                                            <i class="fe fe-more-vertical"></i>
+                                                        </a>
+                                                        <span class="dropdown-menu" aria-labelledby="courseDropdown">
+                                                            <span class="dropdown-header">Setting</span>
+
+
+
+                                                            <a class="dropdown-item"
+                                                               href="#">
+                                                                <i class="fe fe-eye dropdown-item-icon"></i>
+                                                                Détail
+                                                            </a>
+
+
+                                                        </span>
+                                                    </span>
+                                </td>
+                            </tr>
+
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <!-- Table -->
+
+        </div>
+
+
+        <!-- Card -->
+        <div class="card mb-4">
+            <!-- Card header -->
+            <div class="card-header">
+                <span class="mb-0 h3">Liste des QCM</span>
+
+            </div>
+
+            <!-- Card body -->
+            <div class="card-body">
+                <!-- Form -->
+                <!-- Table -->
+                <div class="table-responsive overflow-y-hidden">
+                    <table class="table mb-0 text-nowrap table-hover table-centered text-nowrap">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Durée</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for qcm in cour.formation.qcm %}
+
+
+                            <tr>
+                                <td>
+                                    {{ qcm.nom }}
+                                </td>
+                                <td>{{ qcm.description }}</td>
+                                <td>{{ qcm.duree }}</td>
+
+
+                                <td>
+                                     <span class="dropdown dropstart">
+                                        <a
+                                                class="btn-icon btn btn-ghost btn-sm rounded-circle"
+                                                href="#"
+                                                role="button"
+                                                id="courseDropdown"
+                                                data-bs-toggle="dropdown"
+                                                data-bs-offset="-20,20"
+                                                aria-expanded="false">
+                                                            <i class="fe fe-more-vertical"></i>
+                                        </a>
+                                        <span class="dropdown-menu" aria-labelledby="courseDropdown">
+                                                            <span class="dropdown-header">Setting</span>
+
+
+                                        <a class="dropdown-item"
+                                           href="#">
+                                                                <i class="fe fe-play-circle dropdown-item-icon"></i>
+                                                                Jouer
+                                        </a>
+
+
+                                        </span>
+                                     </span>
+                                </td>
+                            </tr>
+
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <!-- Table -->
+
+        </div>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="newCatgory" tabindex="-1" role="dialog" aria-labelledby="newCatgoryLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title mb-0" id="newCatgoryLabel">Ajout d'une catégorie</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+
+                        <div class="mb-3 mb-2">
+                            <label class="form-label" for="title">
+                                Nom
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" name="nom" placeholder="Nom de la chapitre"
+                                   id="nom" required/>
+                            <small>---</small>
+                            <div class="invalid-feedback">Entrez le nom du chapitre</div>
+                        </div>
+
+                        <div>
+                            <button type="submit" name="add_chapitre" class="btn btn-primary">Ajouter</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="add_qcm" tabindex="-1" role="dialog" aria-labelledby="add_qcmLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title mb-0" id="add_qcmLabel">Ajout d'un QCM</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+
+                        <div class="mb-3 mb-2">
+                            <label class="form-label" for="nom">
+                                Nom
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" name="nom" placeholder="Nom du QCM"
+                                   id="nom" required/>
+                            <div class="invalid-feedback">Entrez le nom du QCM</div>
+                        </div>
+
+                        <div class="mb-3 mb-2">
+                            <label class="form-label" for="description">
+                                Description
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <textarea class="form-control" name="description" id="description" cols="30" rows="5"
+                                      required></textarea>
+                            <div class="invalid-feedback">Entrez le nom du QCM</div>
+                        </div>
+
+
+                        <div class="mb-3 mb-2">
+                            <label class="form-label" for="duree">
+                                Durée
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" name="duree" placeholder="Durée du QCM"
+                                   id="duree" required/>
+                            <div class="invalid-feedback">Entrez la durée du QCM</div>
+                        </div>
+
+
+                        <div>
+                            <button type="submit" name="add_qcm" class="btn btn-primary">Ajouter</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

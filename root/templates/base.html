@@ -90,19 +90,12 @@
                         </li>
                         {% endfor %}
 
-
-
                     </ul>
                 </li>
-
-
-
-
 
                  <li class="nav-item dropdown">
                     <a class="nav-link" href="{% url 'instructeur_index' %}">Instructeurs</a>
                 </li>
-
 
                  <li class="nav-item dropdown">
                     <a href="{% url 'admin_index' %}" class="nav-link">Admin</a>
@@ -110,7 +103,7 @@
 
 
                  <li class="nav-item dropdown">
-                    <a href="#" class="nav-link">Apprenant</a>
+                    <a href="{% url 'apprenant_index' %}" class="nav-link">Apprenant</a>
                 </li>
 
 

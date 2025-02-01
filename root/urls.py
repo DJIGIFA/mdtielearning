@@ -36,5 +36,6 @@ urlpatterns = [
                   path('bibliotheque-numerique/', include("bibliotheque_numerique.urls")),
 
                   path('instructeur/', include("instructeur.urls")),
+                  path('apprenant/', include("apprenant.urls")),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

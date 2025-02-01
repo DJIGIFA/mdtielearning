@@ -1,0 +1,91 @@
+{% extends "apprenant/apprenant_base.html" %}
+{% load static %}
+
+
+{% block apprenant_body %}
+
+    <div class="col-lg-9 col-md-8 col-12">
+        <!-- Card -->
+        <div class="card mb-4">
+            <!-- Card header -->
+            <div class="card-header">
+                <h3 class="mb-0">Achat de la formation {{ formation.nom }}</h3>
+                <p class="mb-0">Le tableau de bord des commandes est un aperçu rapide de toutes les commandes en
+                    cours.</p>
+            </div>
+            <!-- Card body -->
+            <div class="card-body">
+
+
+                <div class="row mt-6">
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-12 mb-3 mb-lg-0">
+                        <div class="text-center">
+                            <!-- PayOut chart -->
+                            <div id="payoutChart" class="apex-charts"></div>
+                            <h4 class="mb-1">Montant à payer</h4>
+                            <h5 class="mb-0 display-4 fw-bold">{{ formation.prix }} FCFA</h5>
+                        </div>
+                    </div>
+
+
+                    <form method="post" class="col-xl-8 col-lg-8 col-md-12 col-12">{% csrf_token %}
+                        <!-- Check box -->
+
+                        <!-- Check box -->
+                        <div class="border p-4 rounded-3  my-2">
+                            <div class="custom-control custom-radio">
+                                <input value="Orange Money" type="radio" id="customRadio1" name="moyen_paiement"
+                                       class="form-check-input" required="required">
+                                <label class="form-check-label ps-1 h4" for="customRadio1">Orange Money</label>
+                            </div>
+                        </div>
+
+
+                        <!-- Check box -->
+                        <div class="border p-4 rounded-3 mt-2">
+                            <div class="custom-control custom-radio">
+                                <input value="Moov Money" type="radio" id="customRadio2" name="moyen_paiement"
+                                       class="form-check-input" >
+                                <label class="form-check-label ps-1 h4" for="customRadio2">Moov Money</label>
+                            </div>
+                        </div>
+
+
+                        <!-- Check box -->
+                        <div class="border p-4 rounded-3  my-2">
+                            <div class="custom-control custom-radio">
+                                <input value="Sama Money" type="radio" id="customRadio3" name="moyen_paiement"
+                                       class="form-check-input" >
+                                <label class="form-check-label ps-1 h4" for="customRadio3">Sama Money</label>
+                            </div>
+                        </div>
+
+
+                        <!-- Check box -->
+                        <div class="border p-4 rounded-3 my-2">
+                            <div class="custom-control custom-radio">
+                                <input value="Carte Visa" type="radio" id="customRadio4" name="moyen_paiement"
+                                       class="form-check-input" >
+                                <label class="form-check-label ps-1 h4" for="customRadio4">Carte Visa</label>
+                            </div>
+                        </div>
+
+
+                        <div class="border p-4 rounded-3 my-2">
+                            <div class="custom-control custom-radio">
+                                <input value="Suivant" type="submit" id="customRadio3"
+                                       class="form-control btn btn-primary" >
+                            </div>
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    
+    </div>
+{% endblock %}
